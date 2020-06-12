@@ -17,6 +17,7 @@ error("Something errored!")
 end
 end)
 if not worked then
+print(link)
 return "Failed to upload."
 end
 local toreturn = "https://pastebin.com/raw/" .. string.sub(link, 22)
