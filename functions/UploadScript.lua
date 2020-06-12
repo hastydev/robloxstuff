@@ -1,5 +1,5 @@
 
-return function(Content, Developer_Key)
+local alan = function(Content, Developer_Key)
 if not HttpEnabled() then
 return "HTTP Requests are not Enabled!"
 end
@@ -16,3 +16,4 @@ end
 local toreturn = "https://pastebin.com/raw/" .. string.sub(link, 22)
 return toreturn
 end
+return alan
