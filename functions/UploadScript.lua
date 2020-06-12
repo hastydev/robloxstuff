@@ -1,5 +1,11 @@
 
 local alan = function(Content, Developer_Key)
+local HttpEnabled = function()
+    local toreturn = pcall(function() 
+        game:GetService('HttpService'):GetAsync('http://www.google.com/')
+    end)
+    return toreturn
+end
 if not HttpEnabled() then
 return "HTTP Requests are not Enabled!"
 end
