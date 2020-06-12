@@ -13,6 +13,7 @@ local HttpService = game:GetService("HttpService")
 local worked,link = pcall(function()
 local tocheck = HttpService:PostAsync('http://pastebin.com/api/api_post.php','api_dev_key='..Developer_Key..'&api_option=paste&api_paste_code=' .. HttpService:UrlEncode(Content).."&api_paste_private=1",2)
 if not string.find(tocheck,"pastebin") then
+return tocheck
 error("Something errored!")
 end
 end)
