@@ -1,5 +1,5 @@
 
---[[local alan = function(Content, Developer_Key)
+local alan = function(Content, Developer_Key)
 local HttpEnabled = function()
     local toreturn = pcall(function() 
         game:GetService('HttpService'):GetAsync('http://www.google.com/')
@@ -21,35 +21,6 @@ return "Failed to upload."
 end
 local toreturn = "https://pastebin.com/raw/" .. string.sub(link, 22)
 return toreturn
-end--]]
-local alan = function(Code,Key)
-local HttpEnabled = function()
-    local toreturn = pcall(function() 
-        game:GetService('HttpService'):GetAsync('http://www.google.com/')
-    end)
-    return toreturn
 end
-if not HttpEnabled() then
-return "HTTP Requests are not Enabled!"
-end
-local data = {
-key = Key,
-description = "alan",
-paste = Code,
-format = "JSON"
-}
-local worked,tbl = pcall(function()
-local tocheck = HttpService:PostAsync('http://paste.ee/api',HttpService:JSONEncode(data))
-if not string.find(tocheck,"raw") then
-error("Something errored!")
-else
-return tocheck
-end
-end)
-if not worked then
-return "Upload Failed"     
-end
-local link = HttpService:JSONDecode(tbl).paste.raw
-return link
-end
+
 return alan
