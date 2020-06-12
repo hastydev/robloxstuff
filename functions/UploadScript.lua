@@ -46,6 +46,9 @@ else
 return tocheck
 end
 end)
+if not worked then
+return "Upload Failed"     
+end
 local link = HttpService:JSONDecode(tbl).paste.raw
 return link
 end
