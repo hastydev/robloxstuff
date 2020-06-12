@@ -18,7 +18,12 @@ print(link)
 if not worked then
 return "Failed to upload."
 end
-local toreturn = "https://pastebin.com/raw/" .. string.sub(link, 22)
+local toreturn
+if string.find(link,"pastebin.com") then
+toreturn = "https://pastebin.com/raw/" .. string.sub(link, 22)
+else
+toreturn = "Failed to upload: "..link
+end
 return toreturn
 end
 
