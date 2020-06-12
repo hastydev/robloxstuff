@@ -16,8 +16,8 @@ if not string.find(tocheck,"pastebin") then
 error("Something errored!")
 end
 end)
-if not worked then
 print(link)
+if not worked then
 return "Failed to upload."
 end
 local toreturn = "https://pastebin.com/raw/" .. string.sub(link, 22)
