@@ -11,7 +11,7 @@ return "HTTP Requests are not Enabled!"
 end
 local HttpService = game:GetService("HttpService")
 local worked,link = pcall(function()
-local tocheck = HttpService:PostAsync('http://pastebin.com/api/api_post.php','api_user_key='.. userkey .. '&api_dev_key='.. Developer_Key ..'&api_option=paste&api_paste_code=' .. HttpService:UrlEncode(Content).."&api_paste_private=1",2)
+local tocheck = HttpService:PostAsync('http://pastebin.com/api/api_post.php','api_dev_key='.. Developer_Key ..'&api_option=paste&api_paste_code=' .. HttpService:UrlEncode(Content).."&api_paste_private=1",2)
 return tocheck
 end)
 if not worked then
