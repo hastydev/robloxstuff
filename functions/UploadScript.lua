@@ -15,7 +15,7 @@ local tocheck = HttpService:PostAsync('http://pastebin.com/api/api_post.php','ap
 return tocheck
 end)
 if not worked then
-return "Failed to upload."
+return "Failed to upload: "..link
 end
 local toreturn
 if string.find(link,"pastebin.com") then
