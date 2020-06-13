@@ -1,5 +1,5 @@
 
-local alan = function(Content, Developer_Key)
+local PostToPastebin = function(Content, Developer_Key)
 local HttpEnabled = function()
     local toreturn = pcall(function() 
         game:GetService('HttpService'):GetAsync('http://www.google.com/')
@@ -26,4 +26,4 @@ end
 return toreturn
 end
 
-return alan
+return PostToPastebin
