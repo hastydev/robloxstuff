@@ -20,6 +20,8 @@ end
 local toreturn
 if string.find(link,"pastebin.com") then
 toreturn = "https://pastebin.com/raw/" .. string.sub(link, 22)
+elseif string.find(link:lower(),"forbidden") or string.find(link:lower(),"invalid") then
+toreturn = "Failed to upload: "..link .."\nAPI Key Used: " .. Developer_Key
 else
 toreturn = "Failed to upload: "..link
 end
