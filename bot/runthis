@@ -1,5 +1,4 @@
-//client.user.setPresence({ activity: { name: 'Made by CoolMLGPlayer#5641' }, status: 'dnd' })
-
+//Made by CoolMLGPlayer#5641
 sleep = function(milliseconds) {
   const date = Date.now();
   let currentDate = null;
