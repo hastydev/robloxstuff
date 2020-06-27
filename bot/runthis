@@ -1,18 +1,16 @@
 //Made by CoolMLGPlayer#5641
-/*sleep = async function(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
-*/
-alannn = function(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
-sleep = async function(ms){
-return await alannn(ms);
-};
+
+
+sleep = function(milliseconds) { 
+    let timeStart = new Date().getTime(); 
+    while (true) { 
+      let elapsedTime = new Date().getTime() - timeStart; 
+      if (elapsedTime > milliseconds) { 
+        break; 
+      } 
+    } 
+  } 
+
 reverseString = function(str) {
     var splitString = str.split("");
  
