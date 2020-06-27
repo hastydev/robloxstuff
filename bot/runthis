@@ -5,11 +5,16 @@ const status_list = [
     "dnd",
     "idle"
 ];
+let current="online"
 
     setInterval(() => {
-        const index = Math.floor(Math.random() * (status_list.length - 1) + 1); 
-       client.user.status(status_list[index]); 
-}, 10000); 
+        let index = Math.floor(Math.random() * (status_list.length - 1) + 1);
+       while(status_list[index]==current){
+       index = Math.floor(Math.random() * (status_list.length - 1) + 1);
+}
+current = index
+       client.user.setStatus(status_list[index]); 
+}, 5000); 
 reverseString = function(str) {
     var splitString = str.split("");
  
