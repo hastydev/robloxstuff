@@ -1,5 +1,6 @@
 //------Made by CoolMLGPlayer#5641------\\
 
+
 client.on('presenceUpdate', (oldMember, newMember) => {
 if (oldMember.status == newMember.status){
 return;
