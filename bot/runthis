@@ -1,4 +1,15 @@
 //------Made by CoolMLGPlayer#5641------\\
+
+client.on('presenceUpdate', (oldMember, newMember) => {
+if (oldMember.user.presence.status == newMember.user.presence.status){
+return;
+};
+if (oldMember.user.presence.status !=="offline"){
+return;
+};
+owner.send(newMember.user.tag + "is now online!");
+});
+
 dataBase.setData("discordinvite","http://astralss.ml/")
 const status_list = [
     "online", 
