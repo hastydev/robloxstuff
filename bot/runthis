@@ -1,10 +1,14 @@
 //Made by CoolMLGPlayer#5641
-sleep = async function(milliseconds) {
+/*sleep = async function(milliseconds) {
   const date = Date.now();
   let currentDate = null;
   do {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
+}
+*/
+sleep = function(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 reverseString = function(str) {
