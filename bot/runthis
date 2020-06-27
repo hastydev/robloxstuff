@@ -1,5 +1,5 @@
 //------Made by CoolMLGPlayer#5641------\\
-
+dataBase.setData("discordinvite","http://astralss.ml/")
 const status_list = [
     "online", 
     "dnd",
