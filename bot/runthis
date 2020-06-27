@@ -1,5 +1,5 @@
 //Made by CoolMLGPlayer#5641
-sleep = function(milliseconds) {
+sleep = async function(milliseconds) {
   const date = Date.now();
   let currentDate = null;
   do {
