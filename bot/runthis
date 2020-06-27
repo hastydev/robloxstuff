@@ -1,0 +1,110 @@
+reverseString = function(str) {
+    var splitString = str.split("");
+ 
+    var reverseArray = splitString.reverse();
+ 
+    var joinArray = reverseArray.join("");
+    
+    return joinArray; 
+}
+async function avatar(msg,id){
+let user = "";
+let alan = await client.users.fetch(id).then((e) =>{
+user = e;
+console.log(e.username);
+return "a";
+}).catch((e) => {
+return "y";
+});
+if (alan == "y"){
+msg.reply("invalid id");
+msg.channel.stopTyping();
+return;
+};
+const weirdembed = new Discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setImage(user.avatarURL)
+        msg.channel.send(weirdembed);
+};
+client.on('message', message => {
+if (!message.content.startsWith(prefix) || message.author.bot) return;
+const args = message.content.slice(prefix.length).split(' ');
+const command = args.shift().toLowerCase();
+if(command == 'ravatar'){
+    let usr = args.join(' ');
+ noblox.getIdFromUsername(usr).then((id) => {
+        const weirdembed = new Discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setImage('http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username=' + usr)
+message.channel.send(weirdembed);
+    }).catch(console.error);
+};
+if (command=="avatar"){
+
+let id= args.join(' ');
+if (message.mentions.members.first()){
+id=message.mentions.members.first().id;
+};
+avatar(msg,id);
+};
+});
+
+print = function(msg,arg){
+msg.channel.send(arg) || msg.author.send(arg);
+};
+async function whois(msg,id){
+let toreturn = "";
+let user = "";
+let alan = await client.users.fetch(id).then((e) =>{
+user = e;
+console.log(e.username);
+return "a";
+}).catch((e) => {
+return "y";
+});
+if (alan == "y"){
+msg.reply("invalid id");
+return "invalid id";
+};
+let themsg = "";
+msg.reply("Looking for **" + user.tag + "** in database...").then((re) => {
+themsg = re
+});
+request('https://verify.eryn.io/api/user/' + id, function (error, response, body) {
+  console.error('error:', error);
+console.log(body)
+let eee = JSON.parse(body)
+setTimeout(function(){
+tag = user.tag || "unable to get discord name"
+if (eee.status =="error") {
+themsg.edit("Error: No roblox account attached to **" + tag + "**");
+return "Error: No roblox account attached to **" + tag + "**";
+};
+if(!eee.robloxId || eee.robloxId == "" || eee.robloxId == "undefined"){
+themsg.edit("no roblox account found");
+msg.channel.stopTyping();
+return;
+};
+themsg.edit(tag + "\n**" + eee.robloxUsername + "**\nhttps://roblox.com/users/" + eee.robloxId + "/profile");
+},500);
+});
+};
+client.on('message', message => {
+if (!message.content.startsWith(prefix) || message.author.bot) return;
+const args = message.content.slice(prefix.length).split(' ');
+const command = args.shift().toLowerCase();
+if(command=="whois"){
+let id= args[0];
+if (message.mentions.members.first()){
+id=message.mentions.members.first().id;
+};
+whois(message,id);
+};
+if(command=="reverse"){
+if(message.author.id !== config.ownerid){
+return message.reply("you do not have permission to do this");
+};
+let arg= args.join(' ');
+print(message,reverseString(arg));
+};
+});
