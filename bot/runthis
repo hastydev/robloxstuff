@@ -25,7 +25,7 @@ let current="online";
 }
 current = status_list[index];
        client.user.setStatus(status_list[index]); 
-}, 5000); 
+}, 60000); 
 reverseString = function(str) {
     var splitString = str.split("");
  
