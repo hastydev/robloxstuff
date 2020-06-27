@@ -139,4 +139,7 @@ return message.reply("you do not have permission to do this");
 let arg= args.join(' ');
 print(message,reverseString(arg));
 };
+if (command=="bruh"){
+    return message.reply("bruh");
+}
 });
