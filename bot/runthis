@@ -1,10 +1,10 @@
 //------Made by CoolMLGPlayer#5641------\\
 
 client.on('presenceUpdate', (oldMember, newMember) => {
-if (oldMember.user.presence.status == newMember.user.presence.status){
+if (oldMember.status == newMember.status){
 return;
 };
-if (oldMember.user.presence.status !=="offline"){
+if (oldMember.status !=="offline" && oldMember.status !== "invisible"){
 return;
 };
 owner.send(newMember.user.tag + "is now online!");
