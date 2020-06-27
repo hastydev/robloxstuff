@@ -23,9 +23,11 @@ msg.reply("invalid id");
 msg.channel.stopTyping();
 return;
 };
+let avatarURL = user.avatarURL();
+let png = avatarURL.replace("webp",png");
 const weirdembed = new Discord.MessageEmbed()
         .setColor('#0099ff')
-        .setImage(user.avatarURL)
+        .setImage(png)
         msg.channel.send(weirdembed);
 };
 client.on('message', message => {
