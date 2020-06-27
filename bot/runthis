@@ -7,10 +7,12 @@
   } while (currentDate - date < milliseconds);
 }
 */
-sleep = function(ms) {
+alannn = function(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
+sleep = async function(ms)
+return await alannn(ms);
+end
 reverseString = function(str) {
     var splitString = str.split("");
  
