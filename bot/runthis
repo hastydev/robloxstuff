@@ -1,4 +1,4 @@
-//Made by CoolMLGPlayer#5641
+//------Made by CoolMLGPlayer#5641------\\
 
 reverseString = function(str) {
     var splitString = str.split("");
