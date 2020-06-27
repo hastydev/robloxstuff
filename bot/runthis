@@ -49,7 +49,7 @@ let id= args.join(' ');
 if (message.mentions.members.first()){
 id=message.mentions.members.first().id;
 };
-avatar(msg,id);
+avatar(message,id);
 };
 });
 
