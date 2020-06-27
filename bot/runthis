@@ -1,5 +1,13 @@
 //client.user.setPresence({ activity: { name: 'Made by CoolMLGPlayer#5641' }, status: 'dnd' })
 
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
 reverseString = function(str) {
     var splitString = str.split("");
  
