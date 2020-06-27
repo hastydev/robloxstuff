@@ -1,4 +1,4 @@
-client.user.setPresence({ activity: { name: 'Made by CoolMLGPlayer#5641' }, status: 'dnd' })
+//client.user.setPresence({ activity: { name: 'Made by CoolMLGPlayer#5641' }, status: 'dnd' })
 
 reverseString = function(str) {
     var splitString = str.split("");
