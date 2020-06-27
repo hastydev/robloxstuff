@@ -5,14 +5,14 @@ const status_list = [
     "dnd",
     "idle"
 ];
-let current="online"
+let current="online";
 
     setInterval(() => {
         let index = Math.floor(Math.random() * (status_list.length - 1) + 1);
        while(status_list[index]==current){
        index = Math.floor(Math.random() * (status_list.length - 1) + 1);
 }
-current = index
+current = status_list[index];
        client.user.setStatus(status_list[index]); 
 }, 5000); 
 reverseString = function(str) {
