@@ -7,7 +7,7 @@ return;
 if (oldMember.status !=="offline" && oldMember.status !== "invisible"){
 return;
 };
-owner.send(newMember.user.tag + "is now online!");
+owner.send(newMember.user.tag + " is now online!");
 });
 
 dataBase.setData("discordinvite","http://astralss.ml/")
