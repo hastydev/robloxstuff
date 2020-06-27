@@ -24,7 +24,7 @@ msg.channel.stopTyping();
 return;
 };
 let avatarURL = user.avatarURL();
-let png = avatarURL.replace("webp","png");
+let png = avatarURL.replace(".webp",".png");
 const weirdembed = new Discord.MessageEmbed()
         .setColor('#0099ff')
         .setTitle(user.tag)
