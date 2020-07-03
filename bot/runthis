@@ -1,145 +1,446 @@
 //------Made by CoolMLGPlayer#5641------\\
-
-
-client.on('presenceUpdate', (oldMember, newMember) => {
-if (oldMember.status == newMember.status){
-return;
+//---Scripter and Developer of Astral---\\
+//----------------Version----------------\\
+//-----------------1.81------------------\\
+snipemsg = [];
+clearNonVerified = function() {
+    const guild = getChannel("<#718963106344075317>").guild;
+    guild.members.cache.map(m => {
+        if (m.user.bot) {
+            return;
+        };
+        if (!m.roles.cache.get("718967724184830013")) {
+            m.user.send("You did not verify please rejoin the server, " + dataBase.getData("discordinvite"));
+            setTimeout(() => {
+                m.kick("not verified");
+            }, 1000);
+        };
+    });
 };
-if (oldMember.status !=="offline" && oldMember.status !== "invisible"){
-return;
+getUser = async function(msg, id) {
+    let alan = await msg.guild.members.cache.get(id).then((e) => {
+        user = e;
+        if (user.bot) {
+            user = "y";
+        };
+        console.log(e.username);
+        return user;
+    }).catch((e) => {
+        return "y";
+    });
+    if (alan == "y") {
+        return msg.reply("invalid id");
+    };
+    return alan;
 };
-owner.send("<@"+newMember.user.id + "> is now online!");
+let verified = [];
+client.on("guildMemberAdd", (m) => {
+    if (m.user.bot) {
+        return;
+    };
+    verified[m.user.id] = true;
+    setTimeout(() => {
+        if (!verified[m.user.id]) {
+            return;
+        };
+        if (!m.roles.cache.get("718967724184830013")) {
+            m.user.send("You did not verify please rejoin the server, " + dataBase.getData("discordinvite"));
+            setTimeout(() => {
+                m.kick("not verified");
+            }, 1000);
+        };
+    }, 600000)
 });
+client.on("messageDelete", (msg) => {
+    if (msg.author.bot || msg.author.id == config.ownerid) {
+        return;
+    };
+    snipemsg[msg.channel.id + msg.author.id] = msg;
+    snipemsg[msg.channel.id] = msg;
+});
+client.on("guildMemberRemove", (m) => {
+    if (m.user.bot) {
+        return;
+    };
+    verified[m.user.id] = false;
+});
+User = function(mention) {
+    if (!mention) return;
 
-dataBase.setData("discordinvite","http://astralss.ml/")
+    if (mention.startsWith('<@') && mention.endsWith('>')) {
+        mention = mention.slice(2, -1);
+
+        if (mention.startsWith('!')) {
+            mention = mention.slice(1);
+        }
+
+        return client.users.cache.get(mention);
+    }
+}
+
+getChannel = function(mention, msg) {
+    if (!mention) {
+        return msg.channel;
+    };
+    if (mention.startsWith('<#') && mention.endsWith('>')) {
+        return client.channels.cache.get(mention.slice(2, -1));
+    }
+    if (mention.startsWith('!')) {
+        return client.channels.cache.get(mention.slice(1));
+    }
+    if (!msg) {
+        return console.log("invalid");
+    };
+    return msg.channel;
+};
+
+function isNumeric(num) {
+    return !isNaN(num)
+}
+
+sleep = async (ms) => {
+    return new Promise(async (resolve, reject) => {
+        let time = new Date().getTime();
+        while (true) {
+            if (time - ms > 0) return;
+            if (time - ms <= 0) {
+                resolve();
+                break;
+            }
+        }
+    })
+}
+
+dataBase.setData("discordinvite", "https://discord.gg/9dQnxvW")
 const status_list = [
-    "online", 
+    "online",
     "dnd",
     "idle"
 ];
-let current="online";
+client.user.setStatus("online");
+let current = "online";
 
-    setInterval(() => {
+setInterval(() => {
+    try {
         let index = Math.floor(Math.random() * (status_list.length - 1) + 1);
-       while(status_list[index]==current){
-       index = Math.floor(Math.random() * (status_list.length - 1) + 1);
-}
-current = status_list[index];
-       client.user.setStatus(status_list[index]); 
-}, 20000); 
+        while (status_list[index] == current) {
+            index = Math.floor(Math.random() * (status_list.length - 1) + 1);
+        }
+        current = status_list[index];
+        client.user.setStatus(status_list[index]);
+    } catch {
+        console.log("error trying to change status");
+    }
+}, 20000);
 reverseString = function(str) {
     var splitString = str.split("");
- 
+
     var reverseArray = splitString.reverse();
- 
+
     var joinArray = reverseArray.join("");
-    
-    return joinArray; 
-}
-async function avatar(msg,id){
-let user = "";
-let alan = await client.users.fetch(id).then((e) =>{
-user = e;
-console.log(e.username);
-return "a";
-}).catch((e) => {
-return "y";
-});
-if (alan == "y"){
-msg.reply("invalid id");
-msg.channel.stopTyping();
-return;
-};
-let avatarURL = user.avatarURL();
-let png = avatarURL.replace(".webp",".png");
-const weirdembed = new Discord.MessageEmbed()
-msg.channel.send("",{files: [png]});
-};
-client.on('message', message => {
-if (!message.content.startsWith(prefix) || message.author.bot) return;
-const args = message.content.slice(prefix.length).split(' ');
-const command = args.shift().toLowerCase();
-if (command=="gender"){
-message.reply("CoolMLGPlayer is a female");
-};
-if(command == 'ravatar'){
-    let usr = args.join(' ');
- noblox.getIdFromUsername(usr).then((id) => {
-        const weirdembed = new Discord.MessageEmbed()
-        .setColor('#0099ff')
-        .setImage('http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username=' + usr)
-message.channel.send(weirdembed);
-    }).catch(console.error);
-};
-if (command=="avatar"){
 
-let id= args.join(' ');
-if (message.mentions.members.first()){
-id=message.mentions.members.first().id;
+    return joinArray;
+}
+async function avatar(msg, id) {
+    let user = "";
+    let alan = await client.users.fetch(id).then((e) => {
+        user = e;
+        console.log(e.username);
+        return "a";
+    }).catch((e) => {
+        return "y";
+    });
+    if (alan == "y") {
+        msg.reply("invalid id");
+        msg.channel.stopTyping();
+        return;
+    };
+    let avatarURL = user.avatarURL("png");
+    avatarURL = avatarURL.replace(".webp", ".png");
+    msg.channel.send("", {
+        files: [avatarURL]
+    });
 };
-avatar(message,id);
-};
+
+
+client.on('messageReactionAdd', async (reaction, user) => {
+    // When we receive a reaction we check if the reaction is partial or not
+    if (reaction.partial) {
+        // If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
+        try {
+            await reaction.fetch();
+        } catch (error) {
+            console.log('Something went wrong when fetching the message: ', error);
+            // Return as `reaction.message.author` may be undefined/null
+            return;
+        }
+    }
+    if (reaction.message.channel.id == "727664034769272882") {
+        if (reaction.emoji.name !== '👍' && reaction.emoji.name !== '👎') {
+            reaction.remove().catch(error => console.error('Failed to remove reactions: ', error));
+        };
+    };
+
+
 });
 
-print = function(msg,arg){
-msg.channel.send(arg) || msg.author.send(arg);
-};
-async function whois(msg,id){
-let toreturn = "";
-let user = "";
-let alan = await client.users.fetch(id).then((e) =>{
-user = e;
-console.log(e.username);
-return "a";
-}).catch((e) => {
-return "y";
+
+client.on('message', async (message) => {
+    try {
+        if (message.channel.id == "727664034769272882") {
+            message.react('👍').then(() => message.react('👎'));
+        };
+        if (dataBase.getData(message.author.id + "bl") == "yes") {
+            return;
+        };
+        if (!message.content.startsWith(prefix) || message.author.bot) return;
+        const args = message.content.slice(prefix.length).split(' ');
+        const command = args.shift().toLowerCase();
+        if (command == "e") {
+            if (message.author.id !== config.ownerid && message.author.id !== "248232475476754432") {
+                const embed = new Discord.MessageEmbed()
+                    .setTitle("Error")
+                    .setColor("ff0000")
+                    .setDescription("You do not have permission to do this")
+                return message.reply(embed);
+            };
+            let code = args.slice(0).join(" ");
+            try {
+                eval(code);
+            } catch (e) {
+                const embed = new Discord.MessageEmbed()
+                    .setTitle("Error")
+                    .setColor("ff0000")
+                    .setDescription(e)
+                return message.reply(embed);
+            };
+        };
+        if (command == "color" || command == "col") {
+            let col = args[0] || "ffffff";
+            col = col.toUpperCase()
+            const embed = new Discord.MessageEmbed()
+                .setTitle("**Color Preview**")
+                .setColor(col)
+                .setDescription("Preview of color: " + col)
+            message.reply(embed)
+        };
+        if (command == "snipe") {
+            let m = message.member;
+            if (!m.roles.cache.get("718965689746194493")) {
+                return message.reply("you do not have permission to do this. Role needed: Buyer");
+            };
+            let id = args[0] || "latest";
+            if (message.mentions.members.first()) {
+                id = message.mentions.members.first().id;
+            };
+            if (id == config.ownerid) {
+                return message.reply("no");
+            };
+            if (id !== "latest" && id !== "") {
+                if (!snipemsg[message.channel.id + id]) {
+                    return message.reply("No Message Found");
+                };
+            };
+            let messag = snipemsg[message.channel.id + id];
+            if (!id || id == "latest") {
+                messag = snipemsg[message.channel.id];
+            };
+            if (!messag) {
+                return message.reply("No Message Found");
+            };
+            let avatarURL = messag.author.displayAvatarURL("png");
+            let png = avatarURL.replace(".webp", ".png");
+            const embed = new Discord.MessageEmbed()
+                .setColor("ff99ff")
+                .setTitle(messag.author.tag)
+                .setThumbnail(png)
+                .setDescription("**" + messag.content + "**")
+                .setFooter(messag.author.id)
+                .setTimestamp(messag.createdAt)
+            return message.reply(embed);
+        };
+        if (command == "embed") {
+            if (!args || !args[1] || !args[2]) {
+                return message.reply("invalid arguments");
+            };
+            if ((args.includes("<@&") || args.includes("@everyone") || args.includes("@here")) && message.author.id !== config.ownerid) {
+                dataBase.setData(message.author.id + "bl", "yes");
+                return message.reply("Blacklisted from bot, have a nice day.");
+            };
+            if (message.author.id !== config.ownerid) {
+                let desc = args.slice(2).join(" ");
+                let title = args[1];
+                title = title.split("-").join(" ");
+                const embed = new Discord.MessageEmbed()
+                    .setTitle(title)
+                    .setColor(args[0])
+                    .setDescription(desc)
+                    .setFooter(message.author.tag + " | " + message.author.id, message.author.avatarURL())
+                    .setTimestamp();
+                message.channel.send(embed);
+                return;
+            };
+            let desc = args.slice(3).join(" ");
+            message.delete();
+            let title = args[2];
+            title = title.split("-").join(" ");
+            let chan = getChannel(args[0], message);
+            const embed = new Discord.MessageEmbed()
+                .setTitle(title)
+                .setColor(args[1])
+                .setDescription(desc)
+            chan.send(embed);
+        };
+        if (command == "bruh") {
+            return message.reply("bruh");
+        }
+        if (command == "shout") {
+            if (message.author.id !== config.ownerid) {
+                return;
+            };
+            noblox.shout({
+                group: config.groupid,
+                message: args.slice(0).join(" ")
+            }).then((result) => {
+                const embed = new Discord.MessageEmbed()
+                    .setTitle("Success")
+                    .setDescription("Set Group Shout to:\n**" + args.slice(0).join(" ") + "**")
+                    .setColor("0099ff")
+                return message.reply(embed);
+            }).catch((e) => {
+                const embed = new Discord.MessageEmbed()
+                    .setTitle("Error")
+                    .setDescription(e)
+                    .setColor("ff0000")
+                return message.reply(embed);
+            });
+        };
+        if (command == "getshout") {
+            noblox.getShout(config.groupid).then((shout) => {
+                const embed = new Discord.MessageEmbed()
+                    .setAuthor(shout.poster.username, 'http://www.roblox.com/Thumbs/Avatar.ashx?x=150&y=150&Format=Png&username=' + shout.poster.username)
+                    .setURL("https://roblox.com/users/" + shout.poster.userId + "/profile")
+                    .setDescription(shout.body)
+                    .setColor("0099ff")
+                return message.reply(embed);
+            });
+        };
+        if (command == "tsay") {
+            if (message.author.id !== config.ownerid) {
+                return;
+            };
+            let chan = getChannel(args[0], message);
+            message.delete();
+            if (!args) {
+                return;
+            };
+            if (!isNumeric(args[1]) && args[1] !== "inf") {
+                return;
+            };
+            let lengthoftime = parseInt(args[1]) || "inf";
+            let txt = args.slice(2).join(" ");
+            chan.send(txt).then((e) => {
+                if (args[1] == "inf") {
+                    return;
+                };
+                setTimeout(() => {
+                    e.delete();
+                }, lengthoftime)
+            });
+        };
+        if (command == 'ravatar') {
+            let usr = args.join(' ');
+            noblox.getIdFromUsername(usr).then((id) => {
+                const weirdembed = new Discord.MessageEmbed()
+                    .setColor('#0099ff')
+                    .setImage('http://www.roblox.com/Thumbs/Avatar.ashx?format=png&y=150&x=150&username=' + usr)
+                message.channel.send(weirdembed);
+            }).catch(console.error);
+        };
+        if (command == "avatar") {
+
+            let id = args.join(' ');
+            if (message.mentions.members.first()) {
+                id = message.mentions.members.first().id;
+            };
+            avatar(message, id);
+        };
+    } catch {
+        console.log("e");
+    }
 });
-if (alan == "y"){
-msg.reply("invalid id");
-return "invalid id";
+
+print = function(chan, arg) {
+    chan = getChannel(chan);
+    return chan.send(arg);
 };
-let themsg = "";
-msg.reply("Looking for **" + user.tag + "** in database...").then((re) => {
-themsg = re
-});
-request('https://verify.eryn.io/api/user/' + id, function (error, response, body) {
-  console.error('error:', error);
-console.log(body)
-let eee = JSON.parse(body)
-setTimeout(function(){
-tag = user.tag || "unable to get discord name"
-if (eee.status =="error") {
-themsg.edit("Error: No roblox account attached to **" + tag + "**");
-return "Error: No roblox account attached to **" + tag + "**";
+DM = function(user, arg) {
+    user = User(user);
+    try {
+        user.send(arg);
+    } catch (e) {
+        console.log(e);
+    };
 };
-if(!eee.robloxId || eee.robloxId == "" || eee.robloxId == "undefined"){
-themsg.edit("no roblox account found");
-msg.channel.stopTyping();
-return;
-};
-themsg.edit(tag + "\n**" + eee.robloxUsername + "**\nhttps://roblox.com/users/" + eee.robloxId + "/profile");
-},500);
-});
+async function whois(msg, id) {
+    let toreturn = "";
+    let user = "";
+    let alan = await client.users.fetch(id).then((e) => {
+        user = e;
+        console.log(e.username);
+        return "a";
+    }).catch((e) => {
+        return "y";
+    });
+    if (alan == "y") {
+        msg.reply("invalid id");
+        return "invalid id";
+    };
+    let themsg = "";
+    msg.reply("Looking for **" + user.tag + "** in database...").then((re) => {
+        themsg = re
+    });
+    request('https://verify.eryn.io/api/user/' + id, function(error, response, body) {
+        console.error('error:', error);
+        console.log(body)
+        let eee = JSON.parse(body)
+        setTimeout(function() {
+            tag = user.tag || "unable to get discord name"
+            if (eee.status == "error") {
+                themsg.edit("Error: No roblox account attached to **" + tag + "**");
+                return "Error: No roblox account attached to **" + tag + "**";
+            };
+            if (!eee.robloxId || eee.robloxId == "" || eee.robloxId == "undefined") {
+                themsg.edit("no roblox account found");
+                msg.channel.stopTyping();
+                return;
+            };
+
+            noblox.getUsernameFromId(eee.robloxId).then((name) => {
+                themsg.edit(tag + "\n**" + name + "**\nhttps://roblox.com/users/" + eee.robloxId + "/profile");
+            });
+        }, 500);
+    });
 };
 client.on('message', message => {
-if (!message.content.startsWith(prefix) || message.author.bot) return;
-const args = message.content.slice(prefix.length).split(' ');
-const command = args.shift().toLowerCase();
-if(command=="whois"){
-let id= args[0];
-if (message.mentions.members.first()){
-id=message.mentions.members.first().id;
-};
-whois(message,id);
-};
-if(command=="reverse"){
-if(message.author.id !== config.ownerid){
-return message.reply("you do not have permission to do this");
-};
-let arg= args.join(' ');
-print(message,reverseString(arg));
-};
-if (command=="bruh"){
-    return message.reply("bruh");
-}
+    if (dataBase.getData(message.author.id + "bl") == "yes") {
+        return;
+    };
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    const args = message.content.slice(prefix.length).split(' ');
+    const command = args.shift().toLowerCase();
+    if (command == "whois") {
+        let id = args[0];
+        if (message.mentions.members.first()) {
+            id = message.mentions.members.first().id;
+        };
+        whois(message, id);
+    };
+    if (command == "reverse") {
+        if (message.author.id !== config.ownerid) {
+            return message.reply("you do not have permission to do this");
+        };
+        let arg = args.join(' ');
+        print("!" + message.channel.id, reverseString(arg));
+    };
 });
